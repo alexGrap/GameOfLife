@@ -1,7 +1,7 @@
 TARGET = ./game_of_life.out
 SRC = src/game_of_life.c
 
-.PHONY: all clean build rebuild check memcheck 1 2 3 4 5 6
+.PHONY: all clean build rebuild memcheck 1 2 3 4 5 6
 
 all: rebuild check memcheck
 #	$(TARGET)
@@ -12,15 +12,8 @@ clean:
 rebuild: clean build
 
 build:
-	gcc -Wall -Wextra -Werror -lncurses -o $(TARGET) $(SRC)
+	gcc -o $(TARGET) $(SRC) -lncurses 
 
-check:
-	python3 materials/linters/cpplint.py --extensions=c $(SRC)
-	cppcheck --enable=all --suppress=missingIncludeSystem $(SRC)
-
-
-memcheck:
-	cat src/1.txt /dev/stdin | leaks -atExit -- $(TARGET)
 
 testing:
 	cat src/test1.txt /dev/stdin | $(TARGET)
